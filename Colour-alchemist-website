@@ -1,0 +1,76 @@
+import React, { useState } from "react";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
+export default function ColourAlchemistApp() {
+  const [naturalLevel, setNaturalLevel] = useState(6);
+  const [desiredLevel, setDesiredLevel] = useState(8);
+  const [toneFamily, setToneFamily] = useState("Neutral");
+  const [greyCoverage, setGreyCoverage] = useState(false);
+  const [greyPercent, setGreyPercent] = useState(0);
+
+  const toneOptions = ["Ash", "Neutral", "Gold", "Warm"];
+
+  const handleFormula = () => {
+    // Placeholder logic for formula output
+    return `Use base ${desiredLevel}.${toneFamily[0].toLowerCase()} with blend from ${naturalLevel}` +
+      (greyCoverage ? ` and adjust for ${greyPercent}% grey.` : ".");
+  };
+
+  return (
+    <div className="min-h-screen bg-cream text-gray-900 p-6">
+      <h1 className="text-3xl font-bold mb-4">Colour Alchemist</h1>
+      <Card className="max-w-xl mx-auto">
+        <CardContent className="space-y-6">
+          <div>
+            <label className="font-medium">Natural Base Level: {naturalLevel}</label>
+            <Slider min={1} max={10} step={1} value={[naturalLevel]} onValueChange={([v]) => setNaturalLevel(v)} />
+          </div>
+
+          <div>
+            <label className="font-medium">Desired Level: {desiredLevel}</label>
+            <Slider min={1} max={10} step={1} value={[desiredLevel]} onValueChange={([v]) => setDesiredLevel(v)} />
+          </div>
+
+          <div>
+            <label className="font-medium">Tone Family:</label>
+            <select
+              className="w-full border rounded p-2"
+              value={toneFamily}
+              onChange={(e) => setToneFamily(e.target.value)}
+            >
+              {toneOptions.map((tone) => (
+                <option key={tone}>{tone}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <label className="font-medium">Grey Hair?</label>
+            <Switch checked={greyCoverage} onCheckedChange={setGreyCoverage} />
+          </div>
+
+          {greyCoverage && (
+            <div>
+              <label className="font-medium">Grey %: {greyPercent}%</label>
+              <Slider min={0} max={100} step={5} value={[greyPercent]} onValueChange={([v]) => setGreyPercent(v)} />
+            </div>
+          )}
+
+          <div className="bg-yellow-100 border p-4 rounded">
+            <strong>Formula:</strong>
+            <p>{handleFormula()}</p>
+            <p className="mt-2 text-sm italic text-gray-600">
+              The reason this colour works for your client is because it's balanced with undertones that neutralise or enhance their existing pigment.
+            </p>
+          </div>
+
+          <Button className="w-full">Save Formula</Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
