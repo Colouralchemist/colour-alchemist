@@ -1,0 +1,4 @@
+This app, Colour Alchemist, is © [Alexander Hojka] 2025.
+All rights reserved.
+Licensed under CC BY-NC-ND 4.0.
+You may use and share this app, but not modify or sell it.
